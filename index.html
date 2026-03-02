@@ -1,783 +1,405 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خالد بدران - مطور مواقع إلكترونية</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 1rem 0;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            text-align: center;
-            color: white;
-            z-index: 2;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(45deg, #ff6b6b, #ffa726);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
-        }
-
-        /* Floating Elements */
-        .floating-element {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .floating-element:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .floating-element:nth-child(2) {
-            width: 60px;
-            height: 60px;
-            top: 70%;
-            left: 80%;
-            animation-delay: 2s;
-        }
-
-        .floating-element:nth-child(3) {
-            width: 40px;
-            height: 40px;
-            top: 30%;
-            left: 85%;
-            animation-delay: 4s;
-        }
-
-        /* About Section */
-        .about {
-            padding: 100px 0;
-            background: white;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #333;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 3px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #666;
-        }
-
-        .skills {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .skill-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            border: 1px solid #f0f0f0;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .skill-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Portfolio Section */
-        .portfolio {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .portfolio-item {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .portfolio-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-        }
-
-        .portfolio-image {
-            height: 200px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        .portfolio-content {
-            padding: 1.5rem;
-        }
-
-        .portfolio-content h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-
-        .portfolio-content p {
-            color: #666;
-            margin-bottom: 1rem;
-        }
-
-        .portfolio-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .tech-tag {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .portfolio-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .portfolio-link {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .portfolio-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .portfolio-link.demo {
-            background: linear-gradient(45deg, #ff6b6b, #ffa726);
-        }
-
-        .portfolio-link.code {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 100px 0;
-            background: #333;
-            color: white;
-        }
-
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .contact-info {
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        .contact-form {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: none;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1rem;
-            font-family: inherit;
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .form-status {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 10px;
-            display: none;
-        }
-
-        .form-status.success {
-            background: rgba(76, 175, 80, 0.2);
-            border: 1px solid #4CAF50;
-            color: #4CAF50;
-        }
-
-        .form-status.error {
-            background: rgba(244, 67, 54, 0.2);
-            border: 1px solid #f44336;
-            color: #f44336;
-        }
-
-        /* Footer */
-        footer {
-            background: #222;
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .social-links a {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            text-decoration: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .about-content,
-            .contact-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .portfolio-links {
-                flex-direction: column;
-            }
-        }
-
-        /* Smooth Scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Loading Animation */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            animation: fadeOut 2s ease-in-out 1s forwards;
-        }
-
-        .loader {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top: 3px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>نكشه المركزي - وجبات صحية على الفحم</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Oswald:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading">
-        <div class="loader"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="img/naksha logo.png" alt="نكشه" class="logo-img" />
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero">الرئيسية</a></li>
+        <li><a href="#about">عنّا</a></li>
+        <li><a href="#menu">القائمة</a></li>
+        <li><a href="#popular">الأكثر طلباً</a></li>
+        <li><a href="#contact">تواصل معنا</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="cart-btn" id="cartBtn">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
+  </nav>
 
-    <!-- Header -->
-    <header>
-        <nav class="container">
-            <div class="logo">خالد بدران</div>
-            <ul class="nav-links">
-                <li><a href="#home">الرئيسية</a></li>
-                <li><a href="#about">عني</a></li>
-                <li><a href="#portfolio">أعمالي</a></li>
-                <li><a href="#contact">تواصل معي</a></li>
-            </ul>
-        </nav>
-    </header>
+  <!-- CART SIDEBAR -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>سلة الطلبات</h3>
+      <button class="close-cart" id="closeCart"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty"><i class="fas fa-shopping-bag"></i><p>سلتك فارغة</p></div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none">
+      <div class="cart-total">المجموع: <span id="cartTotal">0.00</span> JD</div>
+      <button class="order-btn-cart">اطلب الآن</button>
+    </div>
+  </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
-        <div class="container">
-            <div class="hero-content">
-                <h1>مطور مواقع إلكترونية</h1>
-                <p>أحول أفكارك إلى مواقع إلكترونية متطورة وجذابة</p>
-                <a href="#portfolio" class="btn">شاهد أعمالي</a>
-            </div>
-        </div>
-    </section>
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🔥 وجبات طازجة يومياً</div>
+      <h1 class="hero-title">
+        <span class="hero-title-ar">نكشه</span>
+        <span class="hero-title-sub">المركزي</span>
+      </h1>
+      <p class="hero-slogan">وجبات صحية على الفحم بنكهة لا تُنسى</p>
+      <div class="hero-btns">
+        <a href="#menu" class="btn-primary pulse-btn">اطلب الآن <i class="fas fa-arrow-left"></i></a>
+        <a href="#about" class="btn-outline">اعرف أكثر</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">500+</span><span>وجبة يومياً</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">2.5JD</span><span>أسعار تبدأ من</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">100%</span><span>طازج وصحي</span></div>
+      </div>
+    </div>
+    <div class="hero-image-wrap">
+      <div class="hero-plate-glow"></div>
+    </div>
+    <div class="scroll-indicator"><span></span></div>
+  </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">من أنا</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>أنا خالد بدران، مصمم ومطوّر مواقع إلكترونية أقدّم حلول احترافية وسهلة الاستخدام لأصحاب المشاريع والشركات الصغيرة. أُركّز على تصميم مواقع سريعة، متجاوبة، ومرتبة، مع إمكانية التعديل بسهولة.</p>
-                    <p>هدفي هو مساعدة كل صاحب مشروع يكون عنده موقع يعكس شغله ويزيد من عدد عملائه، وكل تصميم أقدمه بكون مُصمم حسب احتياجات العميل وبأعلى جودة ممكنة.</p>
-                    <p>إذا كنت تبحث عن موقع بسيط، أنيق، وفعّال – تواصل معي الآن.</p>
-                </div>
-                <div class="skills">
-                    <div class="skill-card">
-                        <div class="skill-icon">🛍️</div>
-                        <h3>مواقع تجارية بسيطة</h3>
-                        <p>أُصمّم مواقع لمحلات وشركات صغيرة مثل متاجر الهواتف أو المطاعم، مع صفحات للمنتجات، التواصل، والعروض.</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">💻</div>
-                        <h3>تطوير Frontend</h3>
-                        <p>HTML, CSS, JavaScript</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">⚙️</div>
-                        <h3>تطوير Backend</h3>
-                        <p>html,css, Java script</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">📱</div>
-                        <h3>تصميم متجاوب</h3>
-                        <p>مواقع تعمل بشكل مثالي على جميع الأجهزة</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-<!-- Portfolio Section -->
-<section id="portfolio" class="portfolio">
+  <!-- ABOUT -->
+  <section class="about" id="about">
     <div class="container">
-        <h2 class="section-title">أعمالي</h2>
-        <div class="portfolio-grid">
-
-            <!-- Project 1 -->
-            <div class="portfolio-item">
-                <div class="portfolio-image">موقع تجارة الموبايلات</div>
-                <div class="portfolio-content">
-                    <h3>منصة إلكترونية لبيع الهواتف</h3>
-                    <p>منصة متكاملة مخصصة لمحلات بيع الهواتف الذكية، تتميز بسهولة التصفح، وإمكانية إدارة المنتجات والطلبات بكل احترافية.</p>
-                    <div class="portfolio-tech">
-                        <span class="tech-tag">HTML</span>
-                        <span class="tech-tag">CSS</span>
-                        <span class="tech-tag">JavaScript</span>
-                    </div>
-                    <div class="portfolio-links">
-                        <a href="for phones.html" class="portfolio-link demo" target="_blank">معاينة مباشرة</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 2 -->
-            <div class="portfolio-item">
-                <div class="portfolio-image">موقع لمحلات الهواتف الذكية</div>
-                <div class="portfolio-content">
-                    <h3>موقع شركة هواتف احترافي</h3>
-                    <p>موقع أنيق وعصري يعكس هوية الشركات المتخصصة في الهواتف الذكية، مع تصميم متجاوب يعزز تجربة المستخدم ويزيد من ثقة الزبائن.</p>
-                    <div class="portfolio-tech">
-                        <span class="tech-tag">HTML</span>
-                        <span class="tech-tag">CSS</span>
-                        <span class="tech-tag">JavaScript</span>
-                    </div>
-                    <div class="portfolio-links">
-                        <a href="زاويه apple.html" class="portfolio-link demo" target="_blank">معاينة مباشرة</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 3 -->
-            <div class="portfolio-item">
-                <div class="portfolio-image">تطبيق للمطاعم</div>
-                <div class="portfolio-content">
-                    <h3>موقع مطعم إلكتروني</h3>
-                    <p>تطبيق ويب مخصص للمطاعم يتيح عرض المنيو، استقبال الطلبات بسهولة، مع تصميم جذاب وسهل الاستخدام يعكس هوية المطعم.</p>
-                    <div class="portfolio-tech">
-                        <span class="tech-tag">HTML</span>
-                        <span class="tech-tag">CSS</span>
-                        <span class="tech-tag">JavaScript</span>
-                    </div>
-                    <div class="portfolio-links">
-                        <a href="مطعم الذواقه.html" class="portfolio-link demo" target="_blank">معاينة مباشرة</a>
-                    </div>
-                </div>
-            </div>
-                     <div class="portfolio-item">
-                <div class="portfolio-image">موقع لمحلات الهواتف الذكية</div>
-                <div class="portfolio-content">
-                    <h3>موقع شركة هواتف احترافي</h3>
-                    <p>موقع أنيق وعصري يعكس هوية الشركات المتخصصة في الهواتف الذكية، مع تصميم متجاوب يعزز تجربة المستخدم ويزيد من ثقة الزبائن.</p>
-                    <div class="portfolio-tech">
-                        <span class="tech-tag">HTML</span>
-                        <span class="tech-tag">CSS</span>
-                        <span class="tech-tag">JavaScript</span>
-                    </div>
-                    <div class="portfolio-links">
-                        <a href="tikzon.html" class="portfolio-link demo" target="_blank">معاينة مباشرة</a>
-                    </div>
-                </div>
-            </div>
-
+      <div class="about-img-wrap reveal-left">
+        <div class="about-img-deco"></div>
+        <img src="img/IMG-20250813-WA0002.jpg" alt="عن نكشه" class="about-img" />
+        <div class="about-badge-float">
+          <i class="fas fa-fire"></i>
+          <span>مشوي على الفحم</span>
         </div>
+      </div>
+      <div class="about-text reveal-right">
+        <span class="section-tag">من نحن</span>
+        <h2>نكشه المركزي.. الطعم اللي بتدور عليه، وين ما رحت ببالك!</h2>
+        <p>بـ نكشه المركزي، ما بنحكيلك إحنا مطعم وبس، إحنا "عزوتك" بالأكل.</p>
+        <p>سواء كنت متبع نظام صحي وبدك مشاوي وخضار، أو "جاي على بالك" سدر مندي يبيض الوجه، أو حتى سناك وشاورما عالسريع.. طلبك عندنا!</p>
+        <ul class="about-features">
+          <li><i class="fas fa-check-circle"></i> مكونات طازجة 100%</li>
+          <li><i class="fas fa-check-circle"></i> مشوي على الفحم الطبيعي</li>
+          <li><i class="fas fa-check-circle"></i> خدمة توصيل سريعة</li>
+          <li><i class="fas fa-check-circle"></i> أسعار مناسبة للجميع</li>
+        </ul>
+        <a href="#menu" class="btn-primary">شاهد القائمة</a>
+      </div>
     </div>
-</section>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu-section" id="menu">
+    <div class="container">
+      <div class="section-header reveal-up">
+        <span class="section-tag">قائمتنا</span>
+        <h2>اختار وجبتك</h2>
+        <p>وجبات متنوعة تناسب جميع الأذواق</p>
+      </div>
+      <div class="menu-filter reveal-up">
+        <button class="filter-btn active" data-filter="all">الكل</button>
+        <button class="filter-btn" data-filter="healthy">شاورما</button>
+        <button class="filter-btn" data-filter="grilled">مشاوي</button>
+        <button class="filter-btn" data-filter="sides">إضافات</button>
+      </div>
+      <div class="menu-grid" id="menuGrid">
 
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title" style="color: white;">تواصل معي</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>هل لديك مشروع؟</h3>
-                    <p>أنا هنا لمساعدتك في تحويل أفكارك إلى واقع رقمي. تواصل معي الآن وسأكون سعيداً بمناقشة مشروعك.</p>
-                    <div style="margin-top: 2rem;">
-                        <p>📧 kb65019@email.com</p>
-                        <p>📱 +962 79 745 9207</p>
-                        <p>📍 عمان، الأردن</p>
-                    </div>
+
+        
+        
+        <div class="menu-card reveal-up"  data-category="الشاورما" data-name="وجبة حلبي" data-price="3.75">
+          <div class="card-img-wrap">
+            <div class="healthy">
+
+            <img src="img/IMG-20231010-WA0001.jpg" alt="وجبة حلبي" />
+            <div class="card-badge">الأكثر طلباً</div>
+          </div>
+          <div class="card-body">
+            <h3>وجبة حلبي</h3>
+            <p>⏱️ وقت التحضير: 15–20 دقيقة</p>
+            <div class="card-footer">
+              <span class="price">3.75 JD</span>
+              <button class="add-cart-btn" onclick="showProductDetails('وجبة حلبي', 'img/IMG-20240723-WA0002.jpg', {'وجبة حلبي': 3.75}, ['وجبة حلبي'], '20')">
+                <i class="fas fa-plus"></i> أضف
+              </button>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card reveal-up" data-category="الشاورما" data-name="وجبة إيطالي" data-price="2.75">
+          <div class="card-img-wrap">
+            <img src="img/IMG-20230126-WA0022.jpg" alt="وجبة إيطالي" />
+          </div>
+          <div class="card-body">
+            <h3>وجبة إيطالي</h3>
+            <p>شاورما إيطالي مميزة (عادي، سوبر، بالكريمة)</p>
+            <div class="card-footer">
+              <span class="price">من 2.75 JD</span>
+              <button class="add-cart-btn" onclick="showProductDetails('وجبة إيطالي', 'img/IMG-20230812-WA0011.jpg', {'شاورما إيطالي عادي': 2.75, 'شاورما إيطالي سوبر': 3.25, 'شاورما إيطالي بالكريمة والفطر والموزريلا وبصل وصوص': 4.50, 'شاورما بالفطر والكريمة': 3.75}, ['شاورما إيطالي عادي', 'شاورما إيطالي سوبر', 'شاورما بالفطر والكريمة', 'شاورما إيطالي بالكريمة والفطر والموزريلا وبصل وصوص'], '20')">
+                <i class="fas fa-plus"></i> أضف
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card reveal-up" data-category="السناك" data-name="ساندويش زنجر سوبر" data-price="1.75">
+          <div class="card-img-wrap">
+            <img src="img/IMG-20210908-WA0014.jpg" alt="ساندويش زنجر سوبر" />
+          </div>
+          <div class="card-body">
+            <h3>ساندويش زنجر سوبر</h3>
+            <p>⏱️ وقت التحضير: 7 دقائق</p>
+            <div class="card-footer">
+              <span class="price">1.75 JD</span>
+              <button class="add-cart-btn" onclick="showProductDetails('ساندويش زنجر سوبر', 'img/IMG-20210908-WA0014.jpg', {'ساندويش زنجر سوبر': 1.75}, ['ساندويش زنجر سوبر'], '7')">
+                <i class="fas fa-plus"></i> أضف
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card reveal-up" data-category="السناك" data-name="وجبة زنجر" data-price="2.75">
+          <div class="card-img-wrap">
+            <img src="img/IMG-20210908-WA0042.jpg" alt="وجبة زنجر" />
+            <div class="card-badge new">جديد</div>
+          </div>
+          <div class="card-body">
+            <h3>وجبة زنجر</h3>
+            <p>وجبة زنجر (عادي، سوبر، دبل، تربل)</p>
+            <div class="card-footer">
+              <span class="price">من 2.75 JD</span>
+              <button class="add-cart-btn" onclick="showProductDetails('وجبة زنجر', 'img/IMG-20210908-WA0042.jpg', {'وجبة زنجر عادي': 2.75, 'وجبة زنجر سوبر': 3.50, 'وجبة زنجر دبل': 4.00, 'وجبة زنجر تربل': 5.50}, ['وجبة زنجر عادي', 'وجبة زنجر سوبر', 'وجبة زنجر دبل', 'وجبة زنجر تربل'], '20')">
+                <i class="fas fa-plus"></i> أضف
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- POPULAR -->
+  <section class="popular-section" id="popular">
+    <div class="popular-bg-text">NAKSHA</div>
+    <div class="container">
+      <div class="section-header reveal-up">
+        <span class="section-tag light">الأكثر طلباً</span>
+        <h2>نجوم القائمة</h2>
+        <p>اختيارات عملائنا المفضلين</p>
+      </div>
+      <div class="popular-grid">
+
+
+        <div class="popular-card reveal-right">
+            <div class="popular-rank">#1</div>
+            <div class="popular-img">
+                <img src="img/IMG-20210908-WA0046.jpg" alt="وجبة الشاورما" />
+                <div class="popular-overlay">
+                    <button class="add-cart-btn" onclick="addToCart('وجبة الشاورما', 2.00)">
+                        <i class="fas fa-plus"></i> أضف للسلة
+                    </button>
                 </div>
-                <form class="contact-form" action="https://formspree.io/f/manwznpz" method="POST">
-                    <div class="form-group">
-                        <input type="text" name="name" placeholder="الاسم الكامل" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" name="email" placeholder="البريد الإلكتروني" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="subject" placeholder="موضوع الرسالة" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea name="message" rows="5" placeholder="نص الرسالة" required></textarea>
-                    </div>
-                    <button type="submit" class="btn">إرسال الرسالة</button>
-                    <div class="form-status" id="form-status"></div>
-                </form>
+            </div>
+            <div class="popular-info">
+                <div class="popular-stars">⭐⭐⭐⭐⭐</div>
+                <h3>وجبة الشاورما</h3>
+                <p>الوجبة الأكثر طلباً</p>
+                <div class="popular-price-row">
+                    <span class="popular-price">2.00 JD</span>
+                    <span class="popular-orders">بدأ من</span>
+                </div>
             </div>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="social-links">
-                <a href="mailto:kb65019@email.com" title="البريد الإلكتروني">📧</a>
-                <a href="https://linkedin.com/in/khaledbadrann" title="LinkedIn" target="_blank">💼</a>
-                <a href="https://wa.me/962797459207" title="WhatsApp" target="_blank">📱</a>
-                <a href="https://github.com/khaledbadrann" title="GitHub" target="_blank">🌐</a>
+        <div class="popular-card reveal-right">
+            <div class="popular-rank">#2</div>
+            <div class="popular-img">
+                <img src="img/IMG-20230731-WA0007.jpg" alt="ساندويش شاورما" />
+                <div class="popular-overlay">
+                    <button class="add-cart-btn" onclick="addToCart('ساندويش شاورما', 0.70)">
+                        <i class="fas fa-plus"></i> أضف للسلة
+                    </button>
+                </div>
             </div>
-            <p>&copy; 2025 خالد بدران . جميع الحقوق محفوظة.</p>
+            <div class="popular-info">
+                <div class="popular-stars">⭐⭐⭐⭐⭐</div>
+                <h3>ساندويش شاورما</h3>
+                <p>ساندويش طازج ومقرمش</p>
+                <div class="popular-price-row">
+                    <span class="popular-price">0.70 JD</span>
+                    <span class="popular-orders">بدأ من</span>
+                </div>
+            </div>
         </div>
-    </footer>
 
-    <script>
-       // Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
+        <div class="popular-card reveal-right">
+            <div class="popular-rank">#3</div>
+            <div class="popular-img">
+                <img src="img/IMG-20240805-WA0000.jpg" alt="وجبة نكشة" />
+                <div class="popular-overlay">
+                    <button class="add-cart-btn" onclick="addToCart('وجبة نكشة', 2.25)">
+                        <i class="fas fa-plus"></i> أضف للسلة
+                    </button>
+                </div>
+            </div>
+            <div class="popular-info">
+                <div class="popular-stars">⭐⭐⭐⭐⭐</div>
+                <h3>وجبة نكشة</h3>
+                <p>طعم لا يقاوم</p>
+                <div class="popular-price-row">
+                    <span class="popular-price">2.25 JD</span>
+                    <span class="popular-orders">بدأ من</span>
+                </div>
+            </div>
+        </div>
 
-// Header background on scroll
-window.addEventListener('scroll', function() {
-    const header = document.querySelector('header');
-    if (window.scrollY > 100) {
-        header.style.background = 'rgba(255, 255, 255, 0.98)';
-    } else {
-        header.style.background = 'rgba(255, 255, 255, 0.95)';
-    }
-});
+        <div class="popular-card reveal-right">
+            <div class="popular-rank">#4</div>
+            <div class="popular-img">
+                <img src="img/IMG-20241007-WA0000.jpg" alt="وجبة شرائح شاورما" />
+                <div class="popular-overlay">
+                    <button class="add-cart-btn" onclick="addToCart('وجبة شرائح شاورما', 3.00)">
+                        <i class="fas fa-plus"></i> أضف للسلة
+                    </button>
+                </div>
+            </div>
+            <div class="popular-info">
+                <div class="popular-stars">⭐⭐⭐⭐⭐</div>
+                <h3>وجبة شرائح شاورما</h3>
+                <p>تشمل المثومة والمخلل والخبز</p>
+                <div class="popular-price-row">
+                    <span class="popular-price">3.00 JD</span>
+                    <span class="popular-orders">بدأ من</span>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-// Form submission with Formspree
-document.querySelector('.contact-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="section-header reveal-up">
+        <span class="section-tag">تواصل معنا</span>
+        <h2>نحن هنا لخدمتك</h2>
+        <p>تواصل معنا لأي استفسار أو طلب خاص</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal-left">
+          <div class="contact-card">
+            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <h4>موقعنا</h4>
+              <p>سحاب - الشارع الرئيسي - مثلث الدخلة</p>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+            <div>
+              <h4>اتصل بنا</h4>
+              <p>0790 697 666</p>
+              <p>0788 709 412</p>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon"><i class="fas fa-clock"></i></div>
+            <div>
+              <h4>ساعات العمل</h4>
+              <p>يومياً: 11 صباحاً - 12 منتصف الليل</p>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon"><i class="fas fa-motorcycle"></i></div>
+            <div>
+              <h4>توصيل</h4>
+              <p>متوفر خدمة توصيل لباب بيتك</p>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form-wrap reveal-right">
+          <form class="contact-form" onsubmit="submitForm(event)">
+            <h3>أرسل لنا رسالة</h3>
+            <div class="form-group">
+              <input type="text" placeholder="الاسم الكريم" required />
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="form-group">
+              <input type="tel" placeholder="رقم الهاتف" required />
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="form-group">
+              <textarea placeholder="رسالتك أو طلبك الخاص..." rows="4" required></textarea>
+              <i class="fas fa-comment"></i>
+            </div>
+            <button type="submit" class="btn-primary full-width pulse-btn">
+              <i class="fas fa-paper-plane"></i> أرسل الرسالة
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    const form = this;
-    const formStatus = document.getElementById('form-status');
-    const submitButton = form.querySelector('button[type="submit"]');
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="img/naksha logo.png" alt="نكشه" class="footer-logo" />
+        <p>وجبات صحية على الفحم بنكهة لا تُنسى</p>
+        <div class="social-links">
+          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="#hero">الرئيسية</a></li>
+          <li><a href="#about">عنّا</a></li>
+          <li><a href="#menu">القائمة</a></li>
+          <li><a href="#contact">تواصل معنا</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>معلومات التواصل</h4>
+        <p><i class="fas fa-map-marker-alt"></i> سحاب، الأردن</p>
+        <p><i class="fas fa-phone"></i> 0790 697 xxx</p>
+        <p><i class="fas fa-phone"></i> 0788 709 xxx</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 نكشه المركزي. جميع الحقوق محفوظة.</p>
+    </div>
+  </footer>
 
-    // Show loading state
-    submitButton.textContent = 'جارٍ الإرسال...';
-    submitButton.disabled = true;
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
 
-    // Get form data
-    const formData = new FormData(form);
-
-    // Submit to Formspree
-    fetch(form.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            formStatus.textContent = 'تم إرسال الرسالة بنجاح! سأتواصل معك قريباً.';
-            formStatus.className = 'form-status success';
-            formStatus.style.display = 'block';
-            form.reset();
-        } else {
-            throw new Error('فشل في إرسال الرسالة');
-        }
-    })
-    .catch(error => {
-        formStatus.textContent = 'حدث خطأ في إرسال الرسالة. يرجى المحاولة مرة أخرى.';
-        formStatus.className = 'form-status error';
-        formStatus.style.display = 'block';
-    })
-    .finally(() => {
-        // Reset button state
-        submitButton.textContent = 'إرسال الرسالة';
-        submitButton.disabled = false;
-    });
-});
-    </script>
+  <script src="script.js"></script>
 </body>
 </html>
